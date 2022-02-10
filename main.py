@@ -1,18 +1,35 @@
 from openpyxl import Workbook, load_workbook, drawing
 import datetime
 import PIL.Image
+import locale
 
 workbook = load_workbook("template.xlsx")
 worksheet = workbook.active
 
 offset = 9
+locale.setlocale(locale.LC_ALL, 'de_DE.UTF-8')
+
 first_day = datetime.date.today().replace(day=1)
-for row in range(24):
-    d = first_day + datetime.timedelta(days=row)
-    worksheet.cell(row=row+offset, column=1, value=d.strftime("%a, %d.%m.%Y"))
+last_day = datetime.date.today().replace(day=1, month=first_day.month+1)
+
+day = first_day
+days = []
+while day < last_day:
+    if day.weekday() in [5, 6]:
+        day += datetime.timedelta(days=1)
+        continue
+    days.append(day)
+    day += datetime.timedelta(days=1)
+
+for row, day in enumerate(days):
+    worksheet.cell(row=row+offset,
+                   column=1,
+                   value=day.strftime("%a, %d.%m.%Y"))
     worksheet.cell(row=row+offset, column=3, value=f"10:00:00")
     worksheet.cell(row=row+offset, column=4, value=f"14:30:00")
     worksheet.cell(row=row+offset, column=5, value=f"00:30:00")
+
+    day += datetime.timedelta(days=1)
 
 fp = open("sign.png", "rb")
 img = PIL.Image.open(fp)
