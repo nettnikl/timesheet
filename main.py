@@ -13,7 +13,9 @@ for row in range(24):
 fp = open("sign.png", "rb")
 img = PIL.Image.open(fp)
 
-width = 240
+worksheet.cell(row=36, column=5, value=f"Musterstadt, 01.02.2022")
+
+width = 205
 wpercent = (width/float(img.size[0]))
 height = int(float(img.size[1])*float(wpercent))
 
@@ -22,7 +24,7 @@ fp.seek(0)
 resizedImg.fp = fp
 
 table_img = drawing.image.Image(resizedImg)
-table_img.anchor = "E38"
+table_img.anchor = "E37"
 worksheet.add_image(table_img)
 
 worksheet.protection.enable()
