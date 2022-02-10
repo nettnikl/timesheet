@@ -6,13 +6,11 @@ import holidays
 
 
 class TimesheetGenerator:
-    def init():
-        pass
+    def __init__(self):
+        self.workbook = load_workbook("template.xlsx")
+        self.worksheet = self.workbook.active
 
     def run(self):
-        workbook = load_workbook("template.xlsx")
-        worksheet = workbook.active
-
         offset = 9
         locale.setlocale(locale.LC_ALL, 'de_DE.UTF-8')
 
@@ -36,22 +34,22 @@ class TimesheetGenerator:
             day += datetime.timedelta(days=1)
 
         for row, (day, comment) in enumerate(days):
-            worksheet.cell(row=row+offset,
-                           column=1,
-                           value=day)
+            self.worksheet.cell(row=row+offset,
+                                column=1,
+                                value=day)
             if comment != "":
-                worksheet.cell(row=row+offset, column=2, value="Feiertag")
-                worksheet.cell(row=row+offset, column=3, value=f"")
-                worksheet.cell(row=row+offset, column=4, value=f"")
-                worksheet.cell(row=row+offset, column=5, value=f"")
+                self.worksheet.cell(row=row+offset, column=2, value="Feiertag")
+                self.worksheet.cell(row=row+offset, column=3, value=f"")
+                self.worksheet.cell(row=row+offset, column=4, value=f"")
+                self.worksheet.cell(row=row+offset, column=5, value=f"")
             else:
-                worksheet.cell(row=row+offset, column=2, value="")
-                worksheet.cell(row=row+offset, column=3,
-                               value=datetime.time(10))
-                worksheet.cell(row=row+offset, column=4,
-                               value=datetime.time(14, 30))
-                worksheet.cell(row=row+offset, column=5,
-                               value=datetime.time(0, 30))
+                self.worksheet.cell(row=row+offset, column=2, value="")
+                self.worksheet.cell(row=row+offset, column=3,
+                                    value=datetime.time(10))
+                self.worksheet.cell(row=row+offset, column=4,
+                                    value=datetime.time(14, 30))
+                self.worksheet.cell(row=row+offset, column=5,
+                                    value=datetime.time(0, 30))
 
             day += datetime.timedelta(days=1)
 
@@ -62,9 +60,9 @@ class TimesheetGenerator:
         while sign_date.weekday() in [5, 6]:
             sign_date -= datetime.timedelta(days=1)
 
-        worksheet.cell(row=36,
-                       column=5,
-                       value=f"Musterstadt, {sign_date.strftime('%a, %d.%m.%Y')}")
+        self.worksheet.cell(row=36,
+                            column=5,
+                            value=f"Musterstadt, {sign_date.strftime('%a, %d.%m.%Y')}")
 
         width = 205
         wpercent = (width/float(img.size[0]))
@@ -76,15 +74,18 @@ class TimesheetGenerator:
 
         table_img = drawing.image.Image(resizedImg)
         table_img.anchor = "E37"
-        worksheet.add_image(table_img)
+        self.worksheet.add_image(table_img)
 
-        worksheet.protection.enable()
+        self.worksheet.protection.enable()
 
-        workbook.save("test_out.xlsx")
+    def save(self, path):
+        self.workbook.save(path)
 
 
 def main():
-    TimesheetGenerator().run()
+    gen = TimesheetGenerator()
+    gen.run()
+    gen.save("test_out.xlsx")
 
 
 if __name__ == "__main__":
