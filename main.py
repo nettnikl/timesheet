@@ -72,7 +72,7 @@ class TimesheetGenerator:
         img = PIL.Image.open(fp)
 
         sign_date = datetime.date.today().replace(day=1) - datetime.timedelta(days=1)
-        while sign_date.weekday() in [5, 6]:
+        while sign_date.weekday() in self.weekend_days or day in self.holidays:
             sign_date -= datetime.timedelta(days=1)
 
         self.worksheet.cell(row=36,
