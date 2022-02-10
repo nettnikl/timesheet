@@ -33,15 +33,16 @@ for row, (day, comment) in enumerate(days):
     worksheet.cell(row=row+offset,
                    column=1,
                    value=day)
-    worksheet.cell(row=row+offset, column=2, value=comment)
     if comment != "":
+        worksheet.cell(row=row+offset, column=2, value="Feiertag")
         worksheet.cell(row=row+offset, column=3, value=f"")
         worksheet.cell(row=row+offset, column=4, value=f"")
         worksheet.cell(row=row+offset, column=5, value=f"")
     else:
-        worksheet.cell(row=row+offset, column=3, value=f"10:00:00")
-        worksheet.cell(row=row+offset, column=4, value=f"14:30:00")
-        worksheet.cell(row=row+offset, column=5, value=f"00:30:00")
+        worksheet.cell(row=row+offset, column=2, value="")
+        worksheet.cell(row=row+offset, column=3, value=datetime.time(10))
+        worksheet.cell(row=row+offset, column=4, value=datetime.time(14, 30))
+        worksheet.cell(row=row+offset, column=5, value=datetime.time(0, 30))
 
     day += datetime.timedelta(days=1)
 
