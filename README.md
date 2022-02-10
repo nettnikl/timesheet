@@ -24,7 +24,7 @@ The current interpretation allows to postpone the creation of those timesheets t
 
 ## Enhancement options
 
-[ ] Protection against malicious XML in template  
+[x] Protection against malicious XML in template  
 [ ] Import of working times from Jira  
 [ ] Export as PDF  
 [ ] Add a config file to modify where the signature and the working days are put to  

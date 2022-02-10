@@ -24,7 +24,7 @@ Die aktuell übliche Auslegung erlaubt, das Erstellen dieser Aufzeichnungen bis 
 
 ## Erweiterungsmöglichkeiten
 
-[ ] Schutz gegen schädliches XML im Template  
+[x] Schutz gegen schädliches XML im Template  
 [ ] Import der Arbeitszeiten aus Jira  
 [ ] Export als PDF  
 [ ] Konfigurierbare Orte für die Unterschrift und die Arbeitstage in der Vorlage  
