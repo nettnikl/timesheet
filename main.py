@@ -18,7 +18,7 @@ holiday_list = holidays.Germany(prov="BY")
 
 day = first_day
 days = []
-while day < last_day:
+while day <= last_day:
     if day.weekday() in [5, 6]:
         day += datetime.timedelta(days=1)
         continue
