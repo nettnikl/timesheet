@@ -10,7 +10,7 @@ worksheet = workbook.active
 offset = 9
 locale.setlocale(locale.LC_ALL, 'de_DE.UTF-8')
 
-first_day = datetime.date.today().replace(day=1)
+first_day = datetime.date.today().replace(day=1, month=1)
 next_month = first_day.replace(day=28) + datetime.timedelta(days=4)
 last_day = next_month - datetime.timedelta(days=next_month.day)
 
@@ -34,9 +34,14 @@ for row, (day, comment) in enumerate(days):
                    column=1,
                    value=day)
     worksheet.cell(row=row+offset, column=2, value=comment)
-    worksheet.cell(row=row+offset, column=3, value=f"10:00:00")
-    worksheet.cell(row=row+offset, column=4, value=f"14:30:00")
-    worksheet.cell(row=row+offset, column=5, value=f"00:30:00")
+    if comment != "":
+        worksheet.cell(row=row+offset, column=3, value=f"")
+        worksheet.cell(row=row+offset, column=4, value=f"")
+        worksheet.cell(row=row+offset, column=5, value=f"")
+    else:
+        worksheet.cell(row=row+offset, column=3, value=f"10:00:00")
+        worksheet.cell(row=row+offset, column=4, value=f"14:30:00")
+        worksheet.cell(row=row+offset, column=5, value=f"00:30:00")
 
     day += datetime.timedelta(days=1)
 
