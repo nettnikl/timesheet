@@ -11,48 +11,63 @@ class TimesheetGenerator:
         self.worksheet = self.workbook.active
 
     def run(self):
-        offset = 9
-        locale.setlocale(locale.LC_ALL, 'de_DE.UTF-8')
+        self.day_col_offset = 9
+        self.locale = 'de_DE.UTF-8'
+        self.holidays = holidays.Germany(prov="BY")
+        self.holiday_note = "Feiertag"
+        self.weekend_days = [5, 6]
 
-        first_day = datetime.date.today().replace(day=1, month=1)
+        self.fill()
+
+        self.sign()
+
+    def fill(self):
+
+        locale.setlocale(locale.LC_ALL, self.locale)
+
+        first_day = datetime.date.today().replace(day=1)
         next_month = first_day.replace(day=28) + datetime.timedelta(days=4)
         last_day = next_month - datetime.timedelta(days=next_month.day)
-
-        holiday_list = holidays.Germany(prov="BY")
 
         day = first_day
         days = []
         while day <= last_day:
-            if day.weekday() in [5, 6]:
+            if day.weekday() in self.weekend_days:
                 day += datetime.timedelta(days=1)
                 continue
-            if day in holiday_list:
-                days.append((day, holiday_list.get(day)))
+            if day in self.holidays:
+                days.append((day, self.holidays.get(day)))
                 day += datetime.timedelta(days=1)
                 continue
             days.append((day, ""))
             day += datetime.timedelta(days=1)
 
         for row, (day, comment) in enumerate(days):
-            self.worksheet.cell(row=row+offset,
+            self.worksheet.cell(row=row+self.day_col_offset,
                                 column=1,
                                 value=day)
             if comment != "":
-                self.worksheet.cell(row=row+offset, column=2, value="Feiertag")
-                self.worksheet.cell(row=row+offset, column=3, value=f"")
-                self.worksheet.cell(row=row+offset, column=4, value=f"")
-                self.worksheet.cell(row=row+offset, column=5, value=f"")
+                self.worksheet.cell(row=row+self.day_col_offset,
+                                    column=2, value=self.holiday_note)
+                self.worksheet.cell(row=row+self.day_col_offset,
+                                    column=3, value=f"")
+                self.worksheet.cell(row=row+self.day_col_offset,
+                                    column=4, value=f"")
+                self.worksheet.cell(row=row+self.day_col_offset,
+                                    column=5, value=f"")
             else:
-                self.worksheet.cell(row=row+offset, column=2, value="")
-                self.worksheet.cell(row=row+offset, column=3,
+                self.worksheet.cell(
+                    row=row+self.day_col_offset, column=2, value="")
+                self.worksheet.cell(row=row+self.day_col_offset, column=3,
                                     value=datetime.time(10))
-                self.worksheet.cell(row=row+offset, column=4,
+                self.worksheet.cell(row=row+self.day_col_offset, column=4,
                                     value=datetime.time(14, 30))
-                self.worksheet.cell(row=row+offset, column=5,
+                self.worksheet.cell(row=row+self.day_col_offset, column=5,
                                     value=datetime.time(0, 30))
 
             day += datetime.timedelta(days=1)
 
+    def sign(self):
         fp = open("sign.png", "rb")
         img = PIL.Image.open(fp)
 
