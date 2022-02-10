@@ -34,7 +34,13 @@ for row, day in enumerate(days):
 fp = open("sign.png", "rb")
 img = PIL.Image.open(fp)
 
-worksheet.cell(row=36, column=5, value=f"Musterstadt, 01.02.2022")
+sign_date = datetime.date.today().replace(day=1) - datetime.timedelta(days=1)
+while sign_date.weekday() in [5, 6]:
+    sign_date -= datetime.timedelta(days=1)
+
+worksheet.cell(row=36,
+               column=6,
+               value=f"Musterstadt, {sign_date.strftime('%a, %d.%m.%Y')}")
 
 width = 205
 wpercent = (width/float(img.size[0]))
