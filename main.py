@@ -22,12 +22,10 @@ class TimesheetGenerator:
         self.sign()
 
     def fill(self):
-
         locale.setlocale(locale.LC_ALL, self.locale)
 
         first_day = datetime.date.today().replace(day=1)
-        next_month = first_day.replace(day=28) + datetime.timedelta(days=4)
-        last_day = next_month - datetime.timedelta(days=next_month.day)
+        last_day = self.get_last_day_in_month(first_day)
 
         day = first_day
         days = []
@@ -67,17 +65,25 @@ class TimesheetGenerator:
 
             day += datetime.timedelta(days=1)
 
+    def get_last_day_in_month(self, day):
+        next_month = day.replace(day=28) + datetime.timedelta(days=4)
+        return next_month - datetime.timedelta(days=next_month.day)
+
+    def get_last_work_day_in_month(self, day):
+        day = self.get_last_day_in_month(day)
+        while day.weekday() in self.weekend_days or day in self.holidays:
+            day -= datetime.timedelta(days=1)
+        return day
+
     def sign(self):
         fp = open("sign.png", "rb")
         img = PIL.Image.open(fp)
 
-        sign_date = datetime.date.today().replace(day=1) - datetime.timedelta(days=1)
-        while sign_date.weekday() in self.weekend_days or day in self.holidays:
-            sign_date -= datetime.timedelta(days=1)
+        sign_day = self.get_last_work_day_in_month(datetime.date.today())
 
         self.worksheet.cell(row=36,
                             column=5,
-                            value=f"Musterstadt, {sign_date.strftime('%a, %d.%m.%Y')}")
+                            value=f"Musterstadt, {sign_day.strftime('%a, %d.%m.%Y')}")
 
         width = 205
         wpercent = (width/float(img.size[0]))
