@@ -10,7 +10,9 @@ class TimesheetGenerator:
         self.workbook = load_workbook("template.xlsx")
         self.worksheet = self.workbook.active
 
-    def run(self):
+    def run(self, when=datetime.date.today()):
+        self.when = when
+
         self.day_col_offset = 9
         self.locale = 'de_DE.UTF-8'
         self.holidays = holidays.Germany(prov="BY")
@@ -31,7 +33,7 @@ class TimesheetGenerator:
     def fill(self):
         locale.setlocale(locale.LC_ALL, self.locale)
 
-        first_day = datetime.date.today().replace(day=1)
+        first_day = self.when.replace(day=1)
         last_day = self.get_last_day_in_month(first_day)
 
         day = first_day
@@ -109,9 +111,11 @@ class TimesheetGenerator:
 
 
 def main():
+    today = datetime.date.today()
+
     gen = TimesheetGenerator()
-    gen.run()
-    gen.save("test_out.xlsx")
+    gen.run(today)
+    gen.save(f"Arbeitszeiterfassung_{today.strftime('%B')}_signed.xlsx")
 
 
 if __name__ == "__main__":
