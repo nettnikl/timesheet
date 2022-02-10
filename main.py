@@ -11,7 +11,8 @@ offset = 9
 locale.setlocale(locale.LC_ALL, 'de_DE.UTF-8')
 
 first_day = datetime.date.today().replace(day=1)
-last_day = first_day.replace(day=1, month=first_day.month+1)
+next_month = first_day.replace(day=28) + datetime.timedelta(days=4)
+last_day = next_month - datetime.timedelta(days=next_month.day)
 
 holiday_list = holidays.Germany(prov="BY")
 
