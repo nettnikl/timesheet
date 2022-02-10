@@ -24,7 +24,7 @@ while day < last_day:
 for row, day in enumerate(days):
     worksheet.cell(row=row+offset,
                    column=1,
-                   value=day.strftime("%a, %d.%m.%Y"))
+                   value=day)
     worksheet.cell(row=row+offset, column=3, value=f"10:00:00")
     worksheet.cell(row=row+offset, column=4, value=f"14:30:00")
     worksheet.cell(row=row+offset, column=5, value=f"00:30:00")
