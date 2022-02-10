@@ -39,7 +39,7 @@ while sign_date.weekday() in [5, 6]:
     sign_date -= datetime.timedelta(days=1)
 
 worksheet.cell(row=36,
-               column=6,
+               column=5,
                value=f"Musterstadt, {sign_date.strftime('%a, %d.%m.%Y')}")
 
 width = 205
