@@ -16,10 +16,17 @@ class TimesheetGenerator:
         self.holidays = holidays.Germany(prov="BY")
         self.holiday_note = "Feiertag"
         self.weekend_days = [5, 6]
-
         self.fill()
 
+        self.sign_image_path = "sign.png"
+        self.sign_image_width = 205
+        self.sign_image_pos = "E37"
+        self.sign_note_row = 36
+        self.sign_note_column = 5
+        self.sign_note_city = "Musterstadt"
         self.sign()
+
+        self.worksheet.protection.enable()
 
     def fill(self):
         locale.setlocale(locale.LC_ALL, self.locale)
@@ -76,28 +83,26 @@ class TimesheetGenerator:
         return day
 
     def sign(self):
-        fp = open("sign.png", "rb")
+        sign_day = self.get_last_work_day_in_month(datetime.date.today())
+        sign_note = f"{self.sign_note_city}, {sign_day.strftime('%a, %d.%m.%Y')}"
+        self.worksheet.cell(row=self.sign_note_row,
+                            column=self.sign_note_column,
+                            value=sign_note)
+
+        fp = open(self.sign_image_path, "rb")
         img = PIL.Image.open(fp)
 
-        sign_day = self.get_last_work_day_in_month(datetime.date.today())
-
-        self.worksheet.cell(row=36,
-                            column=5,
-                            value=f"Musterstadt, {sign_day.strftime('%a, %d.%m.%Y')}")
-
-        width = 205
-        wpercent = (width/float(img.size[0]))
+        wpercent = (self.sign_image_width/float(img.size[0]))
         height = int(float(img.size[1])*float(wpercent))
 
-        resizedImg = img.resize((width, height), PIL.Image.ANTIALIAS)
+        resizedImg = img.resize(
+            (self.sign_image_width, height), PIL.Image.ANTIALIAS)
         fp.seek(0)
         resizedImg.fp = fp
 
         table_img = drawing.image.Image(resizedImg)
-        table_img.anchor = "E37"
+        table_img.anchor = self.sign_image_pos
         self.worksheet.add_image(table_img)
-
-        self.worksheet.protection.enable()
 
     def save(self, path):
         self.workbook.save(path)
