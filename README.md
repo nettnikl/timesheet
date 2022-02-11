@@ -14,7 +14,8 @@ Enjoy!
 3. Put the required files in the same folder as the python file
    - `template.xlsx`
    - `sign.png`
-4. Execute the `main.py`
+4. Execute the `main.py`  
+   e.g. using `python3 main.py && libreoffice --headless --convert-to pdf result.xlsx`
 5. Print/mail the `result.pdf`
 
 ## The law

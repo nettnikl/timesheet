@@ -14,7 +14,8 @@ Viel Spaß!
 3. Die erforderlichen Dateien in denselben Ordner wie die Python-Datei legen
    - `template.xlsx`
    - `sign.png`.
-4. `main.py` ausführen
+4. `main.py` ausführen  
+   z.B. mit `python3 main.py && libreoffice --headless --convert-to pdf result.xlsx`
 5. `result.pdf` drucken/verschicken
 
 ## Das Gesetz
