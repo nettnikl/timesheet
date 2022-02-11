@@ -28,5 +28,5 @@ Die aktuell übliche Auslegung erlaubt, das Erstellen dieser Aufzeichnungen bis 
 [ ] Import der Arbeitszeiten aus Jira  
 [ ] Export als PDF  
 [ ] Konfigurierbare Orte für die Unterschrift und die Arbeitstage in der Vorlage  
-[ ] Feiertage eintragen  
+[x] Feiertage eintragen  
 [ ] Verschicken des Ergebnisses per Mail
