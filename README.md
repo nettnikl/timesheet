@@ -23,6 +23,10 @@ Enjoy!
 In accordance with §17 of the MiLoG, an employer who employs workers in accordance with §8 (1) of the Fourth Book of the Social Code or in the economic sectors or branches of the economy specified in §2a of the Act to Combat Clandestine Employment is also obliged to _record the beginning, end and duration of the daily working time_ of these workers no later than the end of the seventh calendar day following the day on which the work is performed and to keep these records for at least two years starting from the time relevant for the recording.
 The current interpretation allows to postpone the creation of those timesheets to the end of the calendar month.
 
+## Disclaimer
+
+Of course you have to add real values before digitally signing.
+
 ## Enhancement options
 
 [x] Protection against malicious XML in template  

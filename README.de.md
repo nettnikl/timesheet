@@ -23,6 +23,10 @@ Viel Spaß!
 Gemäß §17 MiLoG ist ein Arbeitgeber, der Arbeitnehmer nach §8 Absatz 1 des Vierten Buches Sozialgesetzbuch oder in den in §2a des Schwarzarbeitsbekämpfungsgesetzes genannten Wirtschaftsbereichen oder Wirtschaftszweigen beschäftigt, verpflichtet, _Beginn, Ende und Dauer der täglichen Arbeitszeit_ dieser Arbeitnehmer spätestens bis zum Ablauf des siebten auf den Tag der Arbeitsleistung folgenden Kalendertages _aufzuzeichnen_ und diese Aufzeichnungen mindestens zwei Jahre beginnend ab dem für die Aufzeichnung maßgeblichen Zeitpunkt aufzubewahren.
 Die aktuell übliche Auslegung erlaubt, das Erstellen dieser Aufzeichnungen bis zum Ende des jeweiligen Kalendermonats zu verzögern.
 
+## Disclaimer
+
+Natürlich müssen laut hier echte Werte eingetragen werden vor dem digitalen Unterschreiben.
+
 ## Erweiterungsmöglichkeiten
 
 [x] Schutz gegen schädliches XML im Template  
